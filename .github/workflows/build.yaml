@@ -20,7 +20,7 @@ jobs:
           macos: "brew install qemu"
           windows: |
             choco install qemu
-            dir C:\ProgramData\chocolatey\logs\chocolatey.log
+            type C:\ProgramData\chocolatey\logs\chocolatey.log
       - name: qemu
         run: |
           qemu-system-aarch64 --version
