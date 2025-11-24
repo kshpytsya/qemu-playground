@@ -12,19 +12,17 @@ jobs:
           - windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: msys2/setup-msys2@v2
-        with:
-          msystem: UCRT64
-          install: >-
-            mingw-w64-ucrt-x86_64-qemu
-        if: runner.os == 'Windows'
       - uses: knicknic/os-specific-run@v1
         with:
           linux: |
             sudo apt-get update
             sudo apt-get install qemu-system
           macos: "brew install qemu"
-          # windows: ""
+          windows: |
+            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+            scoop bucket add main
+            scoop install main/qemu
       - name: qemu
         run: |
           qemu-system-aarch64 --version
