@@ -23,6 +23,7 @@ jobs:
             Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
             scoop bucket add main
             scoop install main/qemu
+            dir /s $HOME/scoop/apps/qemu/current
       - name: qemu
         run: |
           qemu-system-aarch64 --version
