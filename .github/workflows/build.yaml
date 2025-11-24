@@ -12,18 +12,25 @@ jobs:
           - windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: knicknic/os-specific-run@v1
+
+      - name: Install QEMU
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install qemu-system
+
+      - name: Install QEMU
+        if: runner.os == 'macOS'
+        run: |
+          brew install qemu
+
+      - name: Install QEMU
+        uses: MinoruSekine/setup-scoop@v4.0.2
         with:
-          linux: |
-            sudo apt-get update
-            sudo apt-get install qemu-system
-          macos: "brew install qemu"
-          windows: |
-            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-            scoop bucket add main
-            scoop install main/qemu
-            dir /s $HOME/scoop/apps/qemu/current
+          apps: qemu
+        if: runner.os == 'Windows'
+
       - name: qemu
         run: |
+          qemu-img --version
           qemu-system-aarch64 --version
