@@ -28,6 +28,7 @@ jobs:
         uses: MinoruSekine/setup-scoop@v4.0.2
         with:
           apps: qemu
+          run_as_admin: false
         if: runner.os == 'Windows'
 
       - name: qemu
