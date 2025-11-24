@@ -14,7 +14,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: knicknic/os-specific-run@v1
         with:
-          linux: "sudo apt-get install qemu-system"
+          linux: |
+            sudo apt-get update
+            sudo apt-get install qemu-system
           macos: "brew install qemu"
           windows: "choco install qemu"
       - name: qemu
